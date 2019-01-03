@@ -2,7 +2,6 @@
 
 enum class TwoSum {
     BRUTE_FORCE_ITERATOR,
-    BRUTE_FORCE,
     HASH_MAP
 };
 
@@ -14,10 +13,10 @@ public:
                 return twoSum_bfi(nums,target);
                 break;
             case TwoSum::BRUTE_FORCE:
-                return twoSum_bfi(nums,target);
+                return twoSum_bf(nums,target);
                 break;
             case TwoSum::HASH_MAP:
-                return twoSum_bfi(nums,target);
+                return twoSum_hm(nums,target);
                 break;
         }
     }
@@ -51,12 +50,12 @@ public:
         }
 
         const auto end   = std::end(umap);
-        const auto begin = std::begin(umap);
 
-        for(auto first_it = begin; first_it != end; ++first_it) {
-            auto second_it = umap.find(target-first_it->first);
-            if(second_it != end && second_it != first_it) {
-                return std::vector<int> {first_it->second, second_it->second};
+        for(auto i = 0; i < nums.size(); i++) {
+            int complement = target - nums[i];
+            auto second_it = umap.find(complement);
+            if(second_it != end && second_it->second != i) {
+                return std::vector<int> {i, second_it->second};
             }
         }
     }
